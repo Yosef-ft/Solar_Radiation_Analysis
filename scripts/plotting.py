@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 def data_grouper(data: pd.DataFrame) -> tuple:
     '''
@@ -124,3 +125,37 @@ def cleaning_impact(data: pd.DataFrame):
     plt.show()
 
     return impact_A, impact_B, impact_WS, impact_WSgust
+
+
+def corr_analysis(data: pd.DataFrame):
+
+    solar_columns = ['GHI', 'DHI', 'DNI']
+    temperature_columns = ['TModA', 'TModB']
+
+    corr_columns = data[solar_columns + temperature_columns]
+    correlation_matrix = corr_columns.corr()
+
+    plt.figure(figsize=(12,8))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+    plt.title('Correlation Analysis')
+    plt.show()
+    
+
+def corr_wind_solar(data):
+    wind_col = ['WS', 'WSgust', 'WD']
+    solar_col = ['GHI', 'DNI', 'DHI']
+
+    fig, axes = plt.subplots(ncols=3, nrows=3, figsize=(12, 10))
+
+    for i, wind in enumerate(wind_col):
+        for j, solar in enumerate(solar_col):
+            sns.scatterplot(x=data[wind], y=data[solar], ax=axes[i, j])
+            axes[i, j].set_title(f'{wind} vs {solar}')
+            axes[i, j].tick_params(axis='x', rotation=45)
+            axes[i, j].set_xlabel(wind)
+            axes[i, j].set_ylabel(solar)
+
+
+    plt.suptitle("Scatter Matrix: Wind Conditions and Solar Irradiance")
+    plt.subplots_adjust(wspace=0.4, hspace=0.4)
+    plt.show()
