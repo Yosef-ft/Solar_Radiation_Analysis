@@ -159,3 +159,29 @@ def corr_wind_solar(data):
     plt.suptitle("Scatter Matrix: Wind Conditions and Solar Irradiance")
     plt.subplots_adjust(wspace=0.4, hspace=0.4)
     plt.show()
+
+
+
+def freq_histograms(data: pd.DataFrame):
+
+    cols = ['GHI', 'DNI', 'DHI', 'WS', 'TModA', 'TModB', 'Tamb']
+
+    num_rows = 3
+    num_cols = 3
+
+    fig, axes = plt.subplots(ncols= num_cols, nrows=num_rows, figsize=(12,10))
+
+    for i, col in enumerate(cols):
+        row = i // 3
+        col_idx = i % 3
+
+        axes[row, col_idx].hist(data[col], bins=20, edgecolor='white')
+        axes[row, col_idx].set_xlabel(col)
+        axes[row, col_idx].set_ylabel('Frequency')
+
+    # Remove empty subplots if there are any
+    for i in range(len(cols), num_rows * num_cols):
+        fig.delaxes(axes.flatten()[i])
+
+    plt.tight_layout(pad=2.0)
+    plt.show()
