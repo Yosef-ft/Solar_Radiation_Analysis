@@ -185,3 +185,18 @@ def freq_histograms(data: pd.DataFrame):
 
     plt.tight_layout(pad=2.0)
     plt.show()
+
+
+def bubble_charts(data):
+
+    plt.figure(figsize=(12, 8))
+    scatter = plt.scatter(data['GHI'], data['Tamb'], s=data['RH'], c=data['BP'], cmap='viridis', alpha=0.6, edgecolors='w', linewidth=0.5)
+
+    cbar = plt.colorbar(scatter)
+    cbar.set_label('Barometric Pressure (BP)')
+
+    plt.xlabel('Global Horizontal Irradiance (GHI) [W/m²]')
+    plt.ylabel('Ambient Temperature (Tamb) [°C]')
+    plt.title('Bubble Chart: GHI vs. Tamb with Bubble Size Representing RH and Color Representing BP')
+
+    plt.show()    
