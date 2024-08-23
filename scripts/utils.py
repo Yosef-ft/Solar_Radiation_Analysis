@@ -32,3 +32,14 @@ def RH_effech_on_temp_solar(data):
     relevant_columns = ['RH', 'Tamb', 'TModA', 'GHI', 'DNI', 'DHI']
     correlation_matrix = data[relevant_columns].corr()
     return correlation_matrix['RH']
+
+
+def z_score(data: pd.DataFrame):
+    num_cols = data.select_dtypes(exclude='object').columns
+    data_z = (data[num_cols] - data[num_cols].mean()) / data[num_cols].std()
+
+    outliers_data_zScore =( data_z[(data_z > 3) | (data_z < -3) ]).dropna(how='all')
+    percet = round((outliers_data_zScore.shape[0] / data.shape[0]) * 100, 2)
+    
+
+    return percet
