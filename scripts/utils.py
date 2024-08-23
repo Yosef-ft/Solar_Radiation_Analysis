@@ -26,3 +26,9 @@ def detect_outliers(data: pd.DataFrame):
         outliers[col] = outlier_data
 
     return outliers
+
+
+def RH_effech_on_temp_solar(data):
+    relevant_columns = ['RH', 'Tamb', 'TModA', 'GHI', 'DNI', 'DHI']
+    correlation_matrix = data[relevant_columns].corr()
+    return correlation_matrix['RH']
